@@ -11,13 +11,13 @@ class MyFutureBuilderComponent<T> extends HookWidget {
   final BikeBuilder<T> builder;
   final Widget? errorWidget;
   final Widget? loading;
-  final Future<IResponse> future;
-  final MapTo<T> mapTo;
+  final Future<dynamic> future;
+  final MapTo<T>? mapTo;
 
   const MyFutureBuilderComponent({
     required this.future,
     required this.builder,
-    required this.mapTo,
+    this.mapTo,
     this.loading,
     this.errorWidget,
     Key? key,
@@ -35,7 +35,10 @@ class MyFutureBuilderComponent<T> extends HookWidget {
         if ((data is ErrorResponse)) {
           return errorWidget ?? Text("${data.error}");
         }
-        return builder(mapTo(snap.data!));
+        if (mapTo != null && snap.data != null && snap.data is IResponse) {
+          return builder(mapTo!(snap.data as IResponse));
+        }
+        return builder(snap.data!);
       }
       return errorWidget ?? const Text("Opps!error");
     }

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flut_hub/src/views/common/badge_filter.dart';
 import 'package:flut_hub/src/views/common/list_badges.dart';
+import 'package:flut_hub/src/views/common/search_text_item_repo.dart';
 import 'package:flut_hub_domain/flut_hub_domain.dart';
 import 'package:flutter/material.dart';
 
@@ -32,12 +33,8 @@ class ItemRepo extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AutoSizeText(
-              repo.fullName,
-              style: Theme.of(context).textTheme.headline6,
-              minFontSize: 14,
-              maxFontSize: 18,
-              maxLines: 1,
+            SearchTextItemRepo(
+              repoFullName: repo.fullName,
             ),
             const SizedBox(
               height: 3.0,
@@ -84,7 +81,6 @@ class ItemRepo extends StatelessWidget {
               ],
               isScrollable: false,
             ),
-
           ],
         ),
       ),
