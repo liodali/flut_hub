@@ -23,4 +23,4 @@ final List<String> languages = [
   "bash"
 ];
 
-const sizeItem = 172.0;
+const sizeItem = 184.0;

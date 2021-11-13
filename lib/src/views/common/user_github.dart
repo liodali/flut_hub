@@ -15,7 +15,7 @@ class UserGithub extends StatelessWidget {
       children: [
         OwnerImage(
           url: owner.avatar,
-          size: const Size.square(32),
+          size: const Size.square(24),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 8.0),

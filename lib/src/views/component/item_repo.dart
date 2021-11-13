@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flut_hub/src/views/common/badge_filter.dart';
+import 'package:flut_hub/src/views/common/list_badges.dart';
 import 'package:flut_hub_domain/flut_hub_domain.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +19,7 @@ class ItemRepo extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(5.0),
-        side:  BorderSide(
+        side: BorderSide(
           color: Colors.grey[800]!,
           width: 0.6,
         ),
@@ -25,7 +27,7 @@ class ItemRepo extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 8.0,
-          horizontal: 12.0
+          horizontal: 12.0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,18 +47,44 @@ class ItemRepo extends StatelessWidget {
             ),
             if (repo.description != null) ...[
               const SizedBox(
-                height: 8.0,
+                height: 5.0,
               ),
               AutoSizeText(
                 repo.description!,
                 style: Theme.of(context).textTheme.bodyText1?.copyWith(
-                  color: Colors.grey,
-                ),
+                      color: Colors.grey,
+                    ),
                 maxLines: 2,
-                maxFontSize: 15,
-                minFontSize: 11,
+                maxFontSize: 17,
+                minFontSize: 15,
               ),
             ],
+            const SizedBox(
+              height: 2.0,
+            ),
+            ListBadges(
+              badges: [
+                if (repo.stars != null) ...[
+                  BadgeFilter(
+                    title: Text("${repo.stars!}"),
+                    icon: const Icon(
+                      Icons.star,
+                      size: 16,
+                      color: Colors.yellow,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  ),
+                ],
+                if (repo.language != null) ...[
+                  BadgeFilter(
+                    title: Text(repo.language!),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  ),
+                ]
+              ],
+              isScrollable: false,
+            ),
+
           ],
         ),
       ),

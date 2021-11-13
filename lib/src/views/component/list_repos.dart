@@ -1,3 +1,4 @@
+import 'package:flut_hub/src/common/utils.dart';
 import 'package:flut_hub_domain/flut_hub_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -50,7 +51,7 @@ class ListRepos extends HookWidget {
                   );
                 },
                 child: SizedBox(
-                  height: 172,
+                  height: sizeItem,
                   child: ItemRepo(
                     repo: repo,
                   ),
