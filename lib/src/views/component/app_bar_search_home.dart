@@ -70,7 +70,8 @@ class AppBarSearchHome extends HookWidget {
           },
           onChange: (searchText) async {
             if (searchText.isNotEmpty && searchText.length >= 4) {
-              await searchJOB();
+              appTimer.value.setJobCallback(searchJOB);
+              appTimer.value.run();
             }
           },
           onSubmit: (_) {},

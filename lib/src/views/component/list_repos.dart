@@ -15,10 +15,10 @@ class ListRepos extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = Provider.of<HomeViewModel>(context);
+    final viewModel = context.read<HomeViewModel>();
     useEffect(() {
       viewModel.initGithubRepos();
-    }, [context]);
+    }, [viewModel]);
     return StreamComponent<List<GithubRepo>>(
       stream: viewModel.stream,
       loading: const SliverFillRemaining(
