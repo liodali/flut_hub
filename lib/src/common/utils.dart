@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 
 final List<String> languages = [
   "",
@@ -24,3 +24,66 @@ final List<String> languages = [
 ];
 
 const sizeItem = 184.0;
+
+List<TextSpan> computeTextColorationSearch(List<dynamic> data) {
+  final String textToColor = data[1];
+  final Color textColor = data[2];
+  final String nameTitle = data[0];
+  final String nameTitleLowerCase = nameTitle.toLowerCase();
+  List<TextSpan> textsSpanTitle = [];
+  List<String> searchWords = textToColor.toLowerCase().split(" ");
+// 2. remove duplicated searchable text
+  searchWords = Set<String>.from(searchWords).toList();
+
+// 3. organize filter by length for more precision
+// et save  existing  filters in title
+  searchWords.sort((a, b) => b.length.compareTo(a.length));
+  searchWords = searchWords
+      .where((searchWord) =>
+          searchWord.trim().isNotEmpty && nameTitleLowerCase.contains(searchWord))
+      .map((searchWord) => searchWord.toLowerCase())
+      .toList();
+
+// 4. organize  filters with their position in title
+  searchWords.sort(
+      (a, b) => nameTitleLowerCase.indexOf(a).compareTo(nameTitleLowerCase.indexOf(b)));
+  String titleName = nameTitleLowerCase;
+  searchWords.sort((a, b) {
+    if (searchWords.indexOf(a) > 0) {
+      titleName = titleName.replaceFirst(searchWords[searchWords.indexOf(a) - 1], "");
+    }
+    return (titleName.indexOf(a) == titleName.indexOf(b))
+        ? b.length.compareTo(a.length)
+        : titleName.indexOf(a).compareTo(titleName.indexOf(b));
+  });
+
+  String mtitle = nameTitle;
+  while (mtitle.isNotEmpty) {
+    // 5. delete  filters where their are not exist in the title anymore
+    searchWords = searchWords
+        .where((searchWord) =>
+            searchWord.length <= mtitle.length && mtitle.toLowerCase().contains(searchWord))
+        .toList();
+    if (searchWords.isNotEmpty && mtitle.toLowerCase().indexOf(searchWords.first) == 0) {
+      textsSpanTitle.add(
+        TextSpan(
+          text: mtitle.substring(0, searchWords.first.length),
+          style: TextStyle(color: textColor),
+        ),
+      );
+      mtitle = mtitle.substring(searchWords.first.length);
+      searchWords.removeAt(0);
+    } else if (searchWords.isNotEmpty && mtitle.toLowerCase().indexOf(searchWords.first) != 0) {
+      textsSpanTitle.add(
+        TextSpan(text: mtitle.substring(0, mtitle.toLowerCase().indexOf(searchWords.first))),
+      );
+      mtitle = mtitle.substring(mtitle.toLowerCase().indexOf(searchWords.first));
+    } else {
+      textsSpanTitle.add(
+        TextSpan(text: mtitle.substring(0)),
+      );
+      mtitle = "";
+    }
+  }
+  return textsSpanTitle;
+}
