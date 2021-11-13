@@ -11,7 +11,7 @@ class GithubIssue {
   final String title;
   final int number;
   @JsonKey(name: "body")
-  final String description;
+  final String? description;
   final Owner user;
   @JsonKey(name: "created_at", fromJson: parseTo, toJson: formatTo)
   final DateTime createdAt;
