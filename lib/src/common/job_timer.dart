@@ -31,15 +31,22 @@ class JobTimer {
   /// if AppTimer initialized with minimum constructor
   /// take Function as parameter that illustrate the job
   /// that will run in timer callback
-  /// throw late init exception
   void setJobCallback(Function function) {
     callback = function;
   }
 
+  /// dispose
+  /// this method will cancel the timer it's not null
+  /// return void
   void dispose() {
     _timer?.cancel();
   }
 
+  /// run
+  /// this method will execute the callback parameter
+  /// before execution ,it will check if timer already active or not to cancel previous timer
+  /// and start the new one,should be use this method after `setJobCallback` or use default constructor
+  /// throw lateinitexception if callback not initialised
   void run() {
     if (_timer != null && _timer!.isActive) {
       dispose();

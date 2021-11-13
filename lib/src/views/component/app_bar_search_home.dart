@@ -27,7 +27,6 @@ class AppBarSearchHome extends HookWidget {
         homeVM.setFilter(query);
         await homeVM.getRepos(restart: restart);
       }
-
       appTimer.value.dispose;
     }, []);
     return SliverAppBar(

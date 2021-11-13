@@ -6,6 +6,13 @@ import 'package:provider/provider.dart';
 import 'app_bar_search_home.dart';
 import 'list_repos.dart';
 
+/// [AllGithubRepoWidget]
+/// this widget responsible  refresh list that include the list of repositories and appbar,
+/// loading widget,when use try to refresh the list,
+/// pagination will reset,and new call will send,
+/// except that the query of repository in filter is empty or length < 4
+/// it has [controller] parameter to controller customScrollView scroll
+/// and used by the parent widget to animate to top position, when button is clicked by the user
 class AllGithubRepoWidget extends StatelessWidget {
   final ScrollController controller;
 
@@ -16,6 +23,7 @@ class AllGithubRepoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.read<HomeViewModel>();
     return NestedScrollView(
         headerSliverBuilder: (ctx, isInnerBoxScrolled) {
           return [
@@ -24,8 +32,9 @@ class AllGithubRepoWidget extends StatelessWidget {
         },
         body: RefreshIndicator(
           onRefresh: () async {
-            final viewModel = context.read<HomeViewModel>();
-            await viewModel.getRepos(restart: true);
+            if (viewModel.filter.query.name.isNotEmpty && viewModel.filter.query.name.length >= 4) {
+              await viewModel.getRepos(restart: true);
+            }
           },
           child: CustomScrollView(
             controller: controller,
