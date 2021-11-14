@@ -8,7 +8,11 @@ import '../../view_model/adv_filter_view_model.dart';
 import '../../view_model/home_view_model.dart';
 import '../common/badge_filter.dart';
 import 'advanced_filter_repo.dart';
-
+/// BottomSearchAppBar
+/// this widget responsible to show filter picked by user
+/// their are filter that can be modified directly and other will show bottomSheet to modify them
+/// and contain button to show bottomSheet directly
+/// take [size] as parameter to be controlled by SilverAppBar
 class BottomSearchAppBar extends StatelessWidget with PreferredSizeWidget {
   final Size size;
 

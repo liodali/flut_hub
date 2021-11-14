@@ -9,6 +9,11 @@ import '../../view_model/home_view_model.dart';
 import '../common/search_text_repo.dart';
 import 'bottom_search_app_bar.dart';
 
+/// AppBarSearchHome
+/// this widget is appbar of the home page
+/// that contain search input and advanced filter
+/// when input is clicked by the user,button cancel will popup to close the keyboard
+/// and remove the focus from search input
 class AppBarSearchHome extends HookWidget {
   const AppBarSearchHome({Key? key}) : super(key: key);
 
@@ -39,9 +44,10 @@ class AppBarSearchHome extends HookWidget {
           return const SizedBox.shrink();
         },
         child: IconButton(
+          key: const Key("close_search"),
           onPressed: () {
-            if (textController.text.isNotEmpty) {
-              textController.text = "";
+            if (textController.text.isEmpty) {
+              //textController.text = "";
               homeVM.setFilter(
                 homeVM.filter.query.copyWith(name: ""),
                 sort: homeVM.filter.sort,
@@ -76,6 +82,30 @@ class AppBarSearchHome extends HookWidget {
           onSubmit: (_) {},
           hint: MyAppLocalizations.of(context)!.hintSearchRepoTextField,
           radius: 24,
+          suffixIcon: ValueListenableBuilder<bool>(
+            valueListenable: showCloseSearch,
+            builder: (ctx, closeBtIsVisible, child) {
+              if (closeBtIsVisible) {
+                return child!;
+              }
+              return const SizedBox.shrink();
+            },
+            child: ValueListenableBuilder<TextEditingValue>(
+              valueListenable: textController,
+              builder: (ctx, textEditing, child) {
+                if (textEditing.text.isNotEmpty) {
+                  return child!;
+                }
+                return const SizedBox.shrink();
+              },
+              child: GestureDetector(
+                onTap: () {
+                  textController.text = "";
+                },
+                child: const Icon(Icons.close),
+              ),
+            ),
+          ),
         ),
       ),
       pinned: true,
