@@ -9,7 +9,7 @@ void main() async {
     final useCaseSearch = getIt<SearchRepoByNameInteractor>();
 
     final GithubReposResponse response =
-        await useCaseSearch.invoke({"q": "q=osm+language:dart", "page": 3}) as GithubReposResponse;
+        await useCaseSearch.invoke({"query": "q=osm+language:dart", "page": 3}) as GithubReposResponse;
     expect(response.totalCount, 37);
     expect(response.data.isEmpty, true);
   });

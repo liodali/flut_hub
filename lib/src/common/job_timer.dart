@@ -46,7 +46,7 @@ class JobTimer {
   /// this method will execute the callback parameter
   /// before execution ,it will check if timer already active or not to cancel previous timer
   /// and start the new one,should be use this method after `setJobCallback` or use default constructor
-  /// throw lateinitexception if callback not initialised
+  /// throw LateInitException if callback not initialised
   void run() {
     if (_timer != null && _timer!.isActive) {
       dispose();

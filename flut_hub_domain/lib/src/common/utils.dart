@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 import '../../flut_hub_domain.dart';
@@ -10,6 +11,13 @@ extension MoreExt on List<InnerQuery> {
   String toInnerString() {
     return map((e) => e.toString()).reduce((elem1, elem2) => "$elem1+$elem2");
   }
+}
+var _now = DateTime.now();
+
+@protected
+@visibleForTesting
+void setNow(DateTime now){
+  _now = now;
 }
 
 final format = DateFormat("yyyy-MM-dd\Thh:mm:ss\Z");
@@ -36,11 +44,10 @@ DateTime parseTo(String createAt) {
 /// return String that represent number of days or weeks or months
 /// return 0d when now is before [date] parameter
 String differenceDaysFromNow(DateTime date) {
-  final now = DateTime.now();
-  if (now.isBefore(date)) {
+  if (_now.isBefore(date)) {
     return "0d";
   }
-  int days = now.difference(date).inDays;
+  int days = _now.difference(date).inDays;
   if (days > 0) {
     if (days ~/ 30 > 0) {
       return "${(days / 30).round()}mo";

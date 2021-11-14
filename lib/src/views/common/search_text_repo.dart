@@ -6,6 +6,7 @@ class SearchTextRepo extends StatelessWidget {
   final Function()? onEditingComplete;
   final Function(String)? onChange;
   final Function()? onTap;
+  final Widget? suffixIcon;
   final String hint;
   final double radius;
 
@@ -18,6 +19,7 @@ class SearchTextRepo extends StatelessWidget {
     this.onTap,
     this.hint = "search",
     this.radius = 16.0,
+    this.suffixIcon,
   }) : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class SearchTextRepo extends StatelessWidget {
         fillColor: Colors.grey[400],
         hintText: hint,
         filled: true,
+        suffixIcon:  suffixIcon,
         prefixIcon: const Icon(
           Icons.search,
           size: 24,
