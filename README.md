@@ -4,7 +4,7 @@ Flutter application to search for repositories and see their issues
 
 ## Getting Started
 
-<img src="https://github.com/liodali/flut_hub/blob/master/fluthub.gif?raw=true" alt="flut_hub preview"><br>
+<img src="https://github.com/liodali/flut_hub/blob/main/fluthub.gif?raw=true" alt="flut_hub preview"><br>
 <br>
 ### build
 
