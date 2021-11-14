@@ -9,7 +9,10 @@ extension MoreExt on List<InnerQuery> {
   /// with query input of github rest api.
   /// return String that will be add it to query name in http call to get data from github rest api
   String toInnerString() {
-    return map((e) => e.toString()).reduce((elem1, elem2) => "$elem1+$elem2");
+    if(isNotEmpty){
+      return map((e) => e.toString()).reduce((elem1, elem2) => "$elem1+$elem2");
+    }
+    return "";
   }
 }
 var _now = DateTime.now();
