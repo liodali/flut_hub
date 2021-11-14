@@ -49,13 +49,16 @@ String differenceDaysFromNow(DateTime date) {
   }
   int days = _now.difference(date).inDays;
   if (days > 0) {
+    /// check days is more than month or not
     if (days ~/ 30 > 0) {
       return "${(days / 30).round()}mo";
     }
+    /// check days in more than week
     if (days ~/ 7 > 0) {
       return "${days ~/ 7}w";
     }
     return "${days}d";
   }
+  /// in the same day
   return DateFormat("HH:mm").format(date);
 }

@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+/// SearchTextRepo
+/// this widget is responsible to manage search input of the use in appbar
+/// when user change text input , if the text has more or equal 4 letter will make new call to get new repositories
+///  with [onChange] callback, we always get new input user,
+///  [textController] we used to get value inside callback of JobTimer (check Widget when SearchTextRepo Called)
+/// [onTap] callback,help us to make specific logic like we show cancel button , to remove focus from TextField
 class SearchTextRepo extends StatelessWidget {
   final TextEditingController textController;
   final Function(String)? onSubmit;
@@ -40,7 +46,7 @@ class SearchTextRepo extends StatelessWidget {
         fillColor: Colors.grey[400],
         hintText: hint,
         filled: true,
-        suffixIcon:  suffixIcon,
+        suffixIcon: suffixIcon,
         prefixIcon: const Icon(
           Icons.search,
           size: 24,
@@ -54,10 +60,7 @@ class SearchTextRepo extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius),
           borderSide: BorderSide.none,
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 3.0,
-          vertical: 2.0
-        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 3.0, vertical: 2.0),
       ),
     );
   }
