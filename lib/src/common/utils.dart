@@ -59,6 +59,13 @@ List<TextSpan> computeTextColorationSearch(List<dynamic> data) {
   });
 
   String mtitle = nameTitle;
+  textsSpanTitle = generateColorationText(mtitle,searchWords,textColor);
+  return textsSpanTitle;
+}
+
+List<TextSpan> generateColorationText(String mtitle, List<String> searchWords, Color textColor) {
+  List<TextSpan> textsSpanTitle = [];
+
   while (mtitle.isNotEmpty) {
     /// 5.search for existing filter and add it  to textSpanTitles and  remove it
     searchWords = searchWords
@@ -80,9 +87,17 @@ List<TextSpan> computeTextColorationSearch(List<dynamic> data) {
         //mtitle = nameTitle;
       }
     } else if (searchWords.isNotEmpty && mtitle.toLowerCase().indexOf(searchWords.first) != 0) {
-      textsSpanTitle.add(
-        TextSpan(text: mtitle.substring(0, mtitle.toLowerCase().indexOf(searchWords.first))),
-      );
+      String subText = mtitle.substring(0, mtitle.toLowerCase().indexOf(searchWords.first));
+      bool isContain = searchWords.skip(1).where((words) => subText.toLowerCase().contains(words)).isNotEmpty;
+      if (isContain) {
+        List<TextSpan> innerSpansChildren =
+            generateColorationText(subText, searchWords.skip(1).toList(), textColor);
+        textsSpanTitle.addAll(innerSpansChildren);
+
+      } else {
+        textsSpanTitle.add(TextSpan(text: subText));
+
+      }
       mtitle = mtitle.substring(mtitle.toLowerCase().indexOf(searchWords.first));
     } else {
       textsSpanTitle.add(

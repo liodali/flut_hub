@@ -14,6 +14,15 @@ void main() {
         textSpan.where((element) => element.style != null && element.style?.color == colorTitle);
     expect(textSpanColors.first.text!, titleSearch);
   });
+  test("test complex text coloration", () async {
+    const title = "freeCodeCamp/freeCodeCamp";
+    const titleSearch = "free Co";
+    final Color colorTitle = Colors.red;
+    final textSpan = await compute(computeTextColorationSearch, [title, titleSearch, colorTitle]);
+    final textSpanColors =
+    textSpan.where((element) => element.style != null && element.style?.color == colorTitle);
+    expect(textSpanColors.length, 4);
+  });
   test("test text coloration inside", () async {
     final Color colorTitle = Colors.red;
     final textSpans = TextSpan(children: [

@@ -6,7 +6,7 @@ import 'package:rxdart/rxdart.dart';
 class HomeViewModel extends ChangeNotifier {
   bool _isLoading = false;
   bool initFetchIsDone = false;
-  int maxPage = -1;
+  int maxItems = -1;
   int page = 1;
   IResponse? _reposResponse;
   final List<GithubRepo> _repoCached = [];
@@ -55,16 +55,23 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> getRepos({bool restart = false}) async {
+  Future<void> getRepos({
+    bool restart = false,
+    int perPage = 30,
+  }) async {
+    assert(perPage > 0, "the attribute `perPage`  should be more than 0");
     if (restart) {
       page = 1;
-      maxPage = -1;
+      maxItems = -1;
     }
-    if ((page < maxPage && maxPage != -1) || !_isLoading) {
+    if ((page * perPage < maxItems && maxItems != -1) || !_isLoading) {
       _isLoading = true;
       notifyListeners();
-      await _fetchRepo(page, refresh: restart);
-      page++;
+      await _fetchRepo(
+        page,
+        refresh: restart,
+        perPage: perPage,
+      );
       _isLoading = false;
       notifyListeners();
     }
@@ -81,8 +88,9 @@ class HomeViewModel extends ChangeNotifier {
       "per_page": perPage,
     });
     if (result is GithubReposResponse) {
-      if (maxPage == -1) {
-        maxPage = result.totalCount ?? -1;
+      this.page++;
+      if (maxItems == -1) {
+        maxItems = result.totalCount ?? -1;
       }
       if (refresh) {
         _repoCached.clear();
